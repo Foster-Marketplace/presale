@@ -8,6 +8,4 @@ export const routes = [
   { name: "FAQ", link: "FAQ" },
   { name: "Artists", link: "Artists" },
   { name: "Mint", link: "Mint" },
-  // { name: "Socials", link: "Socials" },
-  // { name: "path name", link: "link url" }, like this
 ];

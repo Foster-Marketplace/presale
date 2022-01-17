@@ -16,7 +16,6 @@ import {
   Container,
 } from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Social from "../../components/Social";
 
 import MenuIcon from "@material-ui/icons/Menu";
 
