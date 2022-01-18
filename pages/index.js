@@ -28,14 +28,14 @@ const index = (props) => {
     fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
       .then(response => response.json())
       .then(data => {
-        setSolPrice(data.price);
+        setSolPrice(parseFloat(data.price).toFixed(3));
       });
 
     setInterval(() => {
       fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
         .then(response => response.json())
         .then(data => {
-          setSolPrice(data.price);
+          setSolPrice(parseFloat(data.price).toFixed(3));
         });
     }, 5000);
   }, []);
