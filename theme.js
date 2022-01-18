@@ -41,6 +41,11 @@ const theme = createTheme({
       fontWeight: 500,
       color: "white",
     },
+    h4: {
+      fontSize: 20,
+      fontWeight: 500,
+      color: "white",
+    },
     a: {
       color: mainBlack,
     },

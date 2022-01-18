@@ -2,77 +2,18 @@ import Layout from "../components/layout/Layout";
 import { Container, Grid, Typography, LinearProgress, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from 'next/image';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
-  btn: {
-    width: 200,
-    height: 55,
-    backgroundImage: "url('img/btn-bg2.png')",
-    backgroundRepeat: "no-repeat",
-    color: "#ffffff",
-    marginTop: 50,
-    marginBottom: 50,
-    borderRadius: 30,
-    fontWeight: "bold !important",
-    "&:hover": {
-      color: "#536aba"
-    }
-  },
-  btn_officer: {
-    backgroundImage: "url('btn-bg2.png')",
-    minHeight: '55px',
-    minWidth: '300px',
-    color: "#ffffff",
-    textTransform: 'initial'
-  },
-  btn_sale: {
-    width: 200,
-    height: 55,
-    backgroundImage: "url('btn-bg2.png')",
-    backgroundRepeat: "no-repeat",
-    color: "#ffffff",
-    borderRadius: 30,
-    fontWeight: "bold !important",
-    "&:hover": {
-      color: "#536aba"
-    },
-    fontSize: "24px"
-  },
-  titleFontStyle: {
-    fontSize: 72,
-    lineHeight: "23.4px",
-    color: "#999",
-    fontWeight: "700"
-  },
-  contentFontStyle: {
-    fontSize: 18,
-    marginTop: 16,
-    lineHeight: "23.4px",
-    color: "#999",
-    fontWeight: "400"
-  },
-  img: {
-    width: "100%",
-    height: "auto",
-    boxShadow: "0px 2px 20px rgba(0,0,0,0.4)",
-  },
-  marketImg: {
-    zIndex: 0,
-    background: "linear-gradient(0deg,rgba(7,7,7,.3),rgba(7,7,7,.3)),url(bg2.png)",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "contain, cover",
-    backgroundPosition: "center",
-    minHeight: 660,
-  },
-  clock: {
-    color: 'white',
-    backgroundColor: 'rgba(7, 7, 7, 0.16)',
-    border: "1px solid #fff",
-    boxSizing: "border-box",
-    backdropFilter: "blur(14px)",
-    borderRadius: 46,
-    padding: "50px 0",
+  priceContainer: {
+    padding: 10,
+    marginTop: 15,
+    backgroundColor: "#EFF0F6",
+    borderRadius: 10,
+    color: "#5E2028",
+    fontSize: 30,
+    display: "flex",
+    alignItems: "center"
   }
 }));
 
@@ -80,6 +21,24 @@ const index = (props) => {
   const classes = useStyles();
 
   const { camp } = props;
+
+  const [solPrice, setSolPrice] = useState(1);
+
+  useEffect(() => {
+    fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
+      .then(response => response.json())
+      .then(data => {
+        setSolPrice(data.price);
+      });
+
+    setInterval(() => {
+      fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
+        .then(response => response.json())
+        .then(data => {
+          setSolPrice(data.price);
+        });
+    }, 5000);
+  }, []);
 
   return (
     <Layout
@@ -110,9 +69,35 @@ const index = (props) => {
         </Grid>
       </Grid>
       <Grid container justifyContent="space-between" style={{ padding: "0px 30px" }}>
-        <Grid item sm={12} md={7}>
+        <Grid item sm={12} md={7} container alignItems="center">
           <div style={{ display: "flex" }}>
-            
+            <div>
+              <Typography variant="h4">
+                Hard Cap of Phase 2
+              </Typography>
+              <div className={classes.priceContainer}>
+                <img src="img/sol_mark.png" />
+                <span style={{ marginLeft: 15 }}>1500 SOL</span>
+              </div>
+            </div>
+            <div style={{ marginLeft: 50 }}>
+              <Typography variant="h4">
+                Sol Token Price
+              </Typography>
+              <div className={classes.priceContainer}>
+                <img src="img/sol_mark.png" />
+                <span style={{ marginLeft: 15 }}>${solPrice}</span>
+              </div>
+            </div>
+            <div style={{ marginLeft: 50 }}>
+              <Typography variant="h4">
+                Available LIFT
+              </Typography>
+              <div className={classes.priceContainer}>
+                <img src="img/lift_mark.png" />
+                <span style={{ marginLeft: 15 }}>450,000 LIFT</span>
+              </div>
+            </div>
           </div>
         </Grid>
         <Grid item sm={12} md={4}>
