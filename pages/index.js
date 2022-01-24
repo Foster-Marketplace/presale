@@ -1,8 +1,22 @@
 import Layout from "../components/layout/Layout";
-import { Container, Grid, Typography, LinearProgress, Button, Box } from "@material-ui/core";
+import { Container, Grid, Typography, LinearProgress, Button, Box, Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from 'next/image';
 import { useState, useEffect } from "react";
+
+import {
+  LAMPORTS_PER_SOL,
+  Connection,
+  clusterApiUrl,
+  PublicKey,
+  SystemProgram,
+  Transaction,
+  sendAndConfirmTransaction,
+} from "@solana/web3.js";
+import { awaitTransactionSignatureConfirmation } from "../utils/candyMachine";
+import { useWallet } from "@solana/wallet-adapter-react";
+
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   priceContainer: {
@@ -13,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#5E2028",
     fontSize: 30,
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    fontWeight: "bold"
   }
 }));
 
@@ -23,22 +38,84 @@ const index = (props) => {
   const { camp } = props;
 
   const [solPrice, setSolPrice] = useState(1);
+  const [amount, setAmount] = useState(1);
+  const wallet = useWallet();
 
   useEffect(() => {
     fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
       .then(response => response.json())
       .then(data => {
-        setSolPrice(parseFloat(data.price).toFixed(3));
+        setSolPrice(parseFloat(data.price).toFixed(2));
       });
 
     setInterval(() => {
       fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
         .then(response => response.json())
         .then(data => {
-          setSolPrice(parseFloat(data.price).toFixed(3));
+          setSolPrice(parseFloat(data.price).toFixed(2));
         });
-    }, 5000);
+    }, 3000);
   }, []);
+
+  const getProvider = async () => {
+    let tmpWindow = window
+    if ("solana" in tmpWindow) {
+
+      await tmpWindow.solana.connect(); // opens wallet to connect to
+
+      const provider = tmpWindow.solana;
+      if (provider.isPhantom) {
+        console.log("Is Phantom installed?  ", provider.isPhantom);
+        return provider;
+      }
+    } else {
+      tmpWindow.location.href = "https://www.phantom.app/";
+    }
+  }
+
+  async function purchaseToken() {
+    let provider = await getProvider()
+    if (!provider) return
+
+    let clusterType = process.env.NEXT_PUBLIC_CLUSTERS
+    const connection = new Connection(
+      clusterApiUrl(clusterType)
+    );
+
+    var transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: provider.publicKey,
+        toPubkey: new PublicKey(process.env.NEXT_PUBLIC_DEPOSIT_WALLET), // owner's public key
+        lamports: amount * LAMPORTS_PER_SOL // Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
+      }),
+    );
+
+    // Setting the variables for the transaction
+    transaction.feePayer = provider.publicKey;
+    let blockhashObj = await connection.getRecentBlockhash();
+    transaction.recentBlockhash = blockhashObj.blockhash;
+
+    // Request creator to sign the transaction (allow the transaction)
+    let signed = await provider.signTransaction(transaction);
+    // The signature is generated
+    let signature = await connection.sendRawTransaction(signed.serialize());
+    // Confirm whether the transaction went through or not
+    await connection.confirmTransaction(signature);
+
+    let result = await axios({
+      method: 'post',
+      url: '/api/saveTransactions',
+      data: {
+        transaction: signature,
+        wallet: provider.publicKey.toString(),
+        solPrice: solPrice,
+        liftAmount: Math.floor(solPrice * amount / 0.01)
+      }
+    });
+    if (result.status == 200) {
+      alert("success");
+    }
+  };
 
   return (
     <Layout
@@ -93,11 +170,28 @@ const index = (props) => {
               <Typography variant="h4">
                 Available LIFT
               </Typography>
-              <div className={classes.priceContainer}>
+              <div className={classes.priceContainer} style={{ backgroundColor: "#378287" }}>
                 <img src="img/lift_mark.png" />
-                <span style={{ marginLeft: 15 }}>450,000 LIFT</span>
+                <span style={{ marginLeft: 15 }}>45,000,000 LIFT</span>
               </div>
             </div>
+          </div>
+          <div style={{ display: "flex" }}>
+            <div className={classes.priceContainer}>
+              <Input type="number" style={{ width: 80, fontSize: 20 }} onChange={(e) => {
+                setAmount(e.target.value);
+              }} />
+              <img src="img/sol_mark.png" />
+              <span style={{ marginLeft: 5 }}>SOL</span>
+            </div>
+            <div className={classes.priceContainer} style={{ marginLeft: 50 }}>
+              <span style={{ marginRight: 5 }}>{Math.floor(solPrice * amount / 0.01)}</span>
+              <img src="img/lift_mark.png" />
+              <span style={{ marginLeft: 5 }}>LIFT</span>
+            </div>
+            <Button className={classes.priceContainer} style={{ backgroundColor: "#DEEFD0", marginLeft: 50, textTransform: "none" }} onClick={purchaseToken}>
+              Purchase LIFT
+            </Button>
           </div>
         </Grid>
         <Grid item sm={12} md={4}>
