@@ -15,6 +15,7 @@ export default function handler(req, res) {
     transactionAddress: data.transaction,
     walletAddress: data.wallet,
     solPrice: data.solPrice,
+    solAmount: data.solAmount,
     liftAmount: data.liftAmount
   });
 

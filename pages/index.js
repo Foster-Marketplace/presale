@@ -109,6 +109,7 @@ const index = (props) => {
         transaction: signature,
         wallet: provider.publicKey.toString(),
         solPrice: solPrice,
+        solAmount: amount,
         liftAmount: Math.floor(solPrice * amount / 0.01)
       }
     });
