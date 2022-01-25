@@ -10,9 +10,73 @@ const Layout = ({ children, title, description, ogImage, url }) => {
   return (
     <>
       <Head>
-        <script dangerouslySetInnerHTML={{ __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '186669796936728');fbq('track','PageView');` }} />
+        <link rel="icon" href={ogImage ? ogImage : ogImg} />
+        <link rel="apple-touch-icon" href={ogImage ? ogImage : ogImg} />
+        <title>
+          {title
+            ? title
+            : "Template - Next.js and Material-UI with Header and Footer"}
+        </title>
+        <meta
+          name="description"
+          key="description"
+          content={
+            description
+              ? description
+              : "This is a Template using Next.js and Material-UI with Header and Footer."
+          }
+        />
+        <meta
+          property="og:title"
+          content={
+            title
+              ? title
+              : "Template - Next.js and Material-UI with Header and Footer"
+          }
+          key="og:title"
+        />
+        <meta property="og:url" content={url ? url : pageUrl} key="og:url" />
+        <meta property="og:site_name" content={url ? url : pageUrl} key="og:site_name" />
+        <meta
+          property="og:image"
+          content={ogImage ? ogImage : ogImg}
+          key="og:image"
+        />
+        <meta
+          property="og:description"
+          content={
+            description
+              ? description
+              : "This is a Template using Next.js and Material-UI with Header and Footer."
+          }
+          key="og:description"
+        />
+        <meta
+          property="twitter:title"
+          content={
+            title
+              ? title
+              : "Template - Next.js and Material-UI with Header and Footer"
+          }
+          key="twitter:title"
+        />
+        <meta property="twitter:url" content={url ? url : pageUrl} key="twitter:url" />
+        <meta property="twitter:site_name" content={url ? url : pageUrl} key="twitter:site_name" />
+        <meta
+          property="twitter:image"
+          content={ogImage ? ogImage : ogImg}
+          key="twitter:image"
+        />
+        <meta
+          property="twitter:description"
+          content={
+            description
+              ? description
+              : "This is a Template using Next.js and Material-UI with Header and Footer."
+          }
+          key="twitter:description"
+        />
       </Head>
-      <noscript dangerouslySetInnerHTML={{ __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=186669796936728&ev=PageView&noscript=1" />` }} />
       <Header />
       <main>{children}</main>
       <Footer />

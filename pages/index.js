@@ -38,7 +38,7 @@ const index = (props) => {
   const { camp } = props;
 
   const [solPrice, setSolPrice] = useState(1);
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(0);
   const wallet = useWallet();
 
   useEffect(() => {
@@ -90,6 +90,8 @@ const index = (props) => {
       }),
     );
 
+    console.log(amount)
+
     // Setting the variables for the transaction
     transaction.feePayer = provider.publicKey;
     let blockhashObj = await connection.getRecentBlockhash();
@@ -120,8 +122,10 @@ const index = (props) => {
 
   return (
     <Layout
-      title="Bunny Freaks"
-      description="10,000 unique avatar collectibles with over 80 traits. Find the perfect match to your freaky side within and unleash it into the metaverse"
+      title="LIFT Token Presale"
+      description="Seed Presale Investor Portal for LIFT Token, the native utility token for Foster Marketplace"
+      ogImage="img/1.png"
+      url="https://presale.fostermarketplace.io"
     >
       <Grid container justifyContent="space-between" style={{ padding: 30 }}>
         <Grid item sm={12} md={6}>
