@@ -159,7 +159,7 @@ const index = (props) => {
               </Typography>
               <div className={classes.priceContainer}>
                 <img src="img/sol_mark.png" />
-                <span style={{ marginLeft: 15 }}>1500 SOL</span>
+                <span style={{ marginLeft: 15 }}>4500 SOL</span>
               </div>
             </div>
             <div style={{ marginLeft: 50 }}>
