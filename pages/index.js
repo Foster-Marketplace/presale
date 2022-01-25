@@ -13,10 +13,9 @@ import {
   Transaction,
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
-import { awaitTransactionSignatureConfirmation } from "../utils/candyMachine";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 
-import axios from 'axios';
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   priceContainer: {
@@ -35,11 +34,10 @@ const useStyles = makeStyles((theme) => ({
 const index = (props) => {
   const classes = useStyles();
 
-  const { camp } = props;
-
   const [solPrice, setSolPrice] = useState(1);
   const [amount, setAmount] = useState(0);
-  const wallet = useWallet();
+  const { connection } = useConnection();
+  const { publicKey, signTransaction } = useWallet();
 
   useEffect(() => {
     fetch("https://price-api.sonar.watch/prices/So11111111111111111111111111111111111111112")
@@ -57,48 +55,22 @@ const index = (props) => {
     }, 3000);
   }, []);
 
-  const getProvider = async () => {
-    let tmpWindow = window
-    if ("solana" in tmpWindow) {
-
-      await tmpWindow.solana.connect(); // opens wallet to connect to
-
-      const provider = tmpWindow.solana;
-      if (provider.isPhantom) {
-        console.log("Is Phantom installed?  ", provider.isPhantom);
-        return provider;
-      }
-    } else {
-      tmpWindow.location.href = "https://www.phantom.app/";
-    }
-  }
-
   async function purchaseToken() {
-    let provider = await getProvider()
-    if (!provider) return
-
-    let clusterType = process.env.NEXT_PUBLIC_CLUSTERS
-    const connection = new Connection(
-      clusterApiUrl(clusterType)
-    );
-
     var transaction = new Transaction().add(
       SystemProgram.transfer({
-        fromPubkey: provider.publicKey,
+        fromPubkey: publicKey,
         toPubkey: new PublicKey(process.env.NEXT_PUBLIC_DEPOSIT_WALLET), // owner's public key
         lamports: amount * LAMPORTS_PER_SOL // Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
       }),
     );
 
-    console.log(amount)
-
     // Setting the variables for the transaction
-    transaction.feePayer = provider.publicKey;
+    transaction.feePayer = publicKey;
     let blockhashObj = await connection.getRecentBlockhash();
     transaction.recentBlockhash = blockhashObj.blockhash;
 
     // Request creator to sign the transaction (allow the transaction)
-    let signed = await provider.signTransaction(transaction);
+    let signed = await signTransaction(transaction);
     // The signature is generated
     let signature = await connection.sendRawTransaction(signed.serialize());
     // Confirm whether the transaction went through or not
@@ -109,7 +81,7 @@ const index = (props) => {
       url: '/api/saveTransactions',
       data: {
         transaction: signature,
-        wallet: provider.publicKey.toString(),
+        wallet: publicKey.toString(),
         solPrice: solPrice,
         solAmount: amount,
         liftAmount: Math.floor(solPrice * amount / 0.01)
