@@ -40,6 +40,13 @@
   z-index: 100 !important;
 }
 
+.particles-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+}
+
 @media only screen and (min-width: 1170px) {
   .vertical-timeline-one {
     display: none;

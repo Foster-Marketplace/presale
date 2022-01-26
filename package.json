@@ -28,6 +28,7 @@
     "react-moment": "^1.1.1",
     "react-no-ssr": "^1.1.0",
     "react-scroll": "^1.8.4",
+    "react-tsparticles": "^1.39.0",
     "react-vertical-timeline-component": "^3.3.3",
     "styled-components": "latest",
     "typescript": "^4.4.3"

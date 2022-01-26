@@ -84,7 +84,6 @@ const Layout = ({ children, title, description, ogImage, url }) => {
         {`
           html,
           body {
-            background: #5E2028 !important;
             overflow-x: hidden;
             padding: 0 !important;
           }

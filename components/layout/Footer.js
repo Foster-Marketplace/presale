@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     width: `100%`,
     position: "relative",
     overflow: "hidden",
-    marginTop: "12.5em",
+    marginTop: "10em",
   },
   link: {
     fontSize: "1.25em",
