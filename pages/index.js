@@ -47,13 +47,13 @@ const index = (props) => {
         setSolPrice(parseFloat(data[0].current_price).toFixed(2));
       });
 
-    // setInterval(() => {
-    //   fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=solana")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       setSolPrice(parseFloat(data[0].current_price).toFixed(2));
-    //     });
-    // }, 3000);
+    setInterval(() => {
+      fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=solana")
+        .then(response => response.json())
+        .then(data => {
+          setSolPrice(parseFloat(data[0].current_price).toFixed(2));
+        });
+    }, 3000);
   }, []);
 
   async function purchaseToken() {
