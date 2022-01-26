@@ -106,7 +106,6 @@ const ParticlesBackground: FC = () => {
                 "size": 40,
                 "duration": 2,
                 "opacity": 8,
-                "speed": 3
               },
               "repulse": {
                 "distance": 200,
