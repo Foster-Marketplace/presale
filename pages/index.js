@@ -106,7 +106,7 @@ const index = (props) => {
       <Layout
         title="LIFT Token Presale"
         description="Seed Presale Investor Portal for LIFT Token, the native utility token for Foster Marketplace"
-        ogImage="img/1.png"
+        ogImage="https://www.liftpresale.com/img/1.png"
         url="https://www.liftpresale.com/"
       >
         <Grid container justifyContent="space-between" style={{ padding: 30 }}>
