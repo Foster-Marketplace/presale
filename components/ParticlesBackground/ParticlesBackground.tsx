@@ -15,20 +15,20 @@ const ParticlesBackground: FC = () => {
           },
           "particles": {
             "number": {
-              "value": 200,
+              "value": 80,
               "density": {
                 "enable": true,
                 "value_area": 800
               }
             },
             "color": {
-              "value": "#378287"
+              "value": "#ffffff"
             },
             "shape": {
               "type": "circle",
               "stroke": {
-                "width": 0,
-                "color": "#deefd0"
+                "width": 1,
+                "color": "#000000"
               },
               "polygon": {
                 "nb_sides": 5
@@ -50,7 +50,7 @@ const ParticlesBackground: FC = () => {
               }
             },
             "size": {
-              "value": 2,
+              "value": 5,
               "random": true,
               "anim": {
                 "enable": false,
@@ -62,18 +62,17 @@ const ParticlesBackground: FC = () => {
             "line_linked": {
               "enable": true,
               "distance": 150,
-              "color": "#eff0f6",
+              "color": "#ffffff",
               "opacity": 0.4,
               "width": 1
             },
             "move": {
               "enable": true,
-              "speed": 6,
+              "speed": 3,
               "direction": "none",
               "random": false,
               "straight": false,
               "out_mode": "out",
-              "bounce": false,
               "attract": {
                 "enable": false,
                 "rotateX": 600,
@@ -106,10 +105,10 @@ const ParticlesBackground: FC = () => {
                 "size": 40,
                 "duration": 2,
                 "opacity": 8,
+                "speed": 3
               },
               "repulse": {
-                "distance": 200,
-                "duration": 0.4
+                "distance": 200
               },
               "push": {
                 "particles_nb": 4
@@ -119,7 +118,7 @@ const ParticlesBackground: FC = () => {
               }
             }
           },
-          "retina_detect": true
+          "retina_detect": true,
         }}
       />
     </div>
