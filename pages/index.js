@@ -29,6 +29,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     fontWeight: "bold"
+  },
+  inputContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column"
+    },
   }
 }));
 
@@ -134,8 +142,8 @@ const index = (props) => {
         </Grid>
         <Grid container justifyContent="space-between" style={{ padding: "0px 30px" }}>
           <Grid item sm={12} md={7} container alignItems="center">
-            <div style={{ display: "flex" }}>
-              <div>
+            <div className={classes.inputContainer}>
+              <div style={{ marginBottom: 20 }}>
                 <Typography variant="h4">
                   Hard Cap of Phase 2
                 </Typography>
@@ -144,7 +152,7 @@ const index = (props) => {
                   <span style={{ marginLeft: 15 }}>4500 SOL</span>
                 </div>
               </div>
-              <div style={{ marginLeft: 50 }}>
+              <div style={{ marginBottom: 20 }}>
                 <Typography variant="h4">
                   Sol Token Price
                 </Typography>
@@ -153,7 +161,7 @@ const index = (props) => {
                   <span style={{ marginLeft: 15 }}>${solPrice}</span>
                 </div>
               </div>
-              <div style={{ marginLeft: 50 }}>
+              <div style={{ marginBottom: 20 }}>
                 <Typography variant="h4">
                   Available LIFT
                 </Typography>
@@ -163,7 +171,7 @@ const index = (props) => {
                 </div>
               </div>
             </div>
-            <div style={{ display: "flex" }}>
+            <div className={classes.inputContainer}>
               <div className={classes.priceContainer}>
                 <Input type="number" style={{ width: 80, fontSize: 20 }} onChange={(e) => {
                   setAmount(e.target.value);
@@ -171,12 +179,12 @@ const index = (props) => {
                 <img src="img/sol_mark.png" />
                 <span style={{ marginLeft: 5 }}>SOL</span>
               </div>
-              <div className={classes.priceContainer} style={{ marginLeft: 50 }}>
+              <div className={classes.priceContainer}>
                 <span style={{ marginRight: 5 }}>{Math.floor(solPrice * amount / 0.01)}</span>
                 <img src="img/lift_mark.png" />
                 <span style={{ marginLeft: 5 }}>LIFT</span>
               </div>
-              <Button className={classes.priceContainer} style={{ backgroundColor: "#DEEFD0", marginLeft: 50, textTransform: "none" }} onClick={purchaseToken}>
+              <Button className={classes.priceContainer} style={{ backgroundColor: "#DEEFD0", textTransform: "none" }} onClick={purchaseToken}>
                 Purchase LIFT
               </Button>
             </div>

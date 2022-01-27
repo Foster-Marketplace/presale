@@ -30,6 +30,9 @@ const theme = createTheme({
       fontSize: 70,
       fontWeight: 600,
       color: "white",
+      '@media (max-width:960px)': {
+        fontSize: 40
+      }
     },
     h2: {
       fontSize: "1.5rem",
@@ -40,6 +43,9 @@ const theme = createTheme({
       fontSize: 30,
       fontWeight: 500,
       color: "white",
+      '@media (max-width:960px)': {
+        fontSize: 20
+      }
     },
     h4: {
       fontSize: 20,

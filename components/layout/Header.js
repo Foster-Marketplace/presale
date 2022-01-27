@@ -51,9 +51,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    color: theme.palette.secondary.main,
-    width: "max-content",
-    fontSize: "1.5rem",
+    height: 50,
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      height: "auto"
+    }
   },
   drawerIconContainer: {
     marginLeft: "auto",
@@ -107,16 +109,16 @@ const Header = () => {
           }}
         >
           <Grid container alignItems="center">
-            <Grid item container md={2} sm={6}>
-              <Link href="/" to="/">
+            <Grid item container md={2} xs={4}>
+              <Link href="/" to="/" style={{ maxWidth: "100%" }}>
                 <img
                   src="img/logo.png"
                   loading="lazy"
-                  height="50"
+                  className={classes.logo}
                 />
               </Link>
             </Grid>
-            <Grid item container md={10} sm={6} justifyContent="flex-end">
+            <Grid item container md={10} xs={8} justifyContent="flex-end">
               <WalletMultiButton />
             </Grid>
           </Grid>
