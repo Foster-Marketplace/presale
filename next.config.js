@@ -29,6 +29,7 @@ module.exports = withTM({
       os: false,
       path: false,
       crypto: false,
+      "buffer": require.resolve("buffer")
     };
 
     return config;

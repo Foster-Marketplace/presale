@@ -82,11 +82,11 @@ const Layout = ({ children, title, description, ogImage, url }) => {
       <Footer />
       <style jsx global>
         {`
-          html,
-          body {
-            overflow-x: hidden;
-            padding: 0 !important;
-          }
+          // html,
+          // body {
+          //   overflow-x: hidden;
+          //   padding: 0 !important;
+          // }
           #__next {
             min-height: 100vh;
             display: flex;

@@ -14,10 +14,13 @@
     "@solana/wallet-adapter-wallets": "^0.10.1",
     "@solana/web3.js": "^1.29.2",
     "@types/react": "^17.0.27",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
     "moment": "^2.29.1",
     "next": "latest",
     "next-transpile-modules": "^8.0.0",
     "path": "^0.12.7",
+    "process": "^0.11.10",
     "prop-types": "latest",
     "react": "latest",
     "react-accessible-accordion": "^3.3.5",
@@ -30,12 +33,14 @@
     "react-scroll": "^1.8.4",
     "react-tsparticles": "^1.39.0",
     "react-vertical-timeline-component": "^3.3.3",
+    "stream-browserify": "^3.0.0",
     "styled-components": "latest",
     "typescript": "^4.4.3"
   },
   "devDependencies": {
     "@iconify/react": "^3.0.1",
-    "babel-plugin-styled-components": "latest"
+    "babel-plugin-styled-components": "latest",
+    "react-app-rewired": "^2.2.1"
   },
   "scripts": {
     "dev": "next dev",
